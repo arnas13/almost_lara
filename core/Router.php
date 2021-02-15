@@ -38,7 +38,9 @@ class Router {
     }
 
     public function resolve() {
+        print "<pre>";
         var_dump($_SERVER);
+        print "</pre>";
         exit;
     }
 }
