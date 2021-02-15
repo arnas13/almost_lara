@@ -1,0 +1,11 @@
+{
+    "name": "vartotojas/almost-lara",
+    "description": "Almost lara mvc learning",
+    "authors": [
+        {
+            "name": "arnas13",
+            "email": "ses.arnas@gmail.com"
+        }
+    ],
+    "require": {}
+}
