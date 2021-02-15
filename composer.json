@@ -7,5 +7,10 @@
             "email": "ses.arnas@gmail.com"
         }
     ],
+    "autoload": {
+        "psr-4": {
+            "app\\": "./"
+        }
+    },
     "require": {}
 }
