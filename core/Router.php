@@ -81,10 +81,28 @@ class Router {
     }
 
     public function renderView(string $view) {
-        include_once Application::$ROOT_DIR."/view/$view.php";
+        $layout = $this->layoutContent();
+        $page = $this->pageContent($view);
+
+        // take layout and replace the content with the $page content
+        return str_replace('{{content}}', $page, $layout);
+
+        // 
     }
 
     protected function layoutContent () {
+        // start buffering
+        ob_start();
         include_once Application::$ROOT_DIR."/view/layout/main.php";
+        // stop and return buffering
+        return ob_get_clean();
+    }
+
+    protected function pageContent($view) {
+        // start buffering
+        ob_start();
+        include_once Application::$ROOT_DIR."/view/$view.php";
+        // stop and return buffering
+        return ob_get_clean();
     }
 }
