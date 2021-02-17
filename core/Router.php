@@ -16,7 +16,7 @@ class Router {
      * routes [
      * ['get' => [
         * ['/' => function return,],
-        * ['/about' => function return,],
+        * ['/about' => 'about' ,],
      * ],  
      * ['post' => [
         * ['/' => function return,],
@@ -52,6 +52,7 @@ class Router {
     public function resolve() {
         $path = $this->request->getPath();
         $method = $this->request->getMethod();
+        
 
         // print "<pre>";
         // var_dump($this->routes);
@@ -68,8 +69,18 @@ class Router {
             die();
         endif;
 
-        // page does exist, we call user function
-        print call_user_func($callback);
+        // if our callback value is string
+        // $app->router->get('/about', 'about');
+        if(is_string($callback)) :
+            return $this->renderView($callback);
+        endif;
 
+        // page does exist, we call user function
+        return call_user_func($callback);
+
+    }
+
+    public function renderView(string $view) {
+        include_once __DIR__."/../view/$view.php";
     }
 }
