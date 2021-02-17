@@ -28,9 +28,10 @@ class Router {
      * @var array
      */
     protected array $routes = [];
-    public function __construct()
+    public Request $request;
+    public function __construct($request)
     {
-        print "This is Router constructor<br>";
+        $this->request = $request;
     }
 
     public function get($path, $callback) {
@@ -39,7 +40,7 @@ class Router {
 
     public function resolve() {
         print "<pre>";
-        var_dump($_SERVER);
+        var_dump($this->request->getPath());
         print "</pre>";
         exit;
     }
