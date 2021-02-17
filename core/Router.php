@@ -29,6 +29,7 @@ class Router {
      */
     protected array $routes = [];
     public Request $request;
+
     public function __construct($request)
     {
         $this->request = $request;
@@ -39,9 +40,26 @@ class Router {
     }
 
     public function resolve() {
-        print "<pre>";
-        var_dump($this->request->getPath());
-        print "</pre>";
-        exit;
+        $path = $this->request->getPath();
+        $method = $this->request->getMethod();
+
+        // print "<pre>";
+        // var_dump($this->routes);
+        // var_dump($path);
+        // var_dump($method);
+        // print "</pre>";
+        // exit();
+
+        // trying to run a route from routes array 
+        $callback = $this->routes[$method][$path] ?? false;
+        // if there is no such route added, we say it doesn't exist
+        if ($callback === false) : 
+            print "Page doesn't exist";
+            die();
+        endif;
+
+        // page does exist, we call user function
+        print call_user_func($callback);
+
     }
 }
