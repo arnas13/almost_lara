@@ -16,7 +16,7 @@ class Router {
      * routes [
      * ['get' => [
         * ['/' => function return,],
-        * ['/about' => function return,],
+        * ['/about' => 'about' ,],
      * ],  
      * ['post' => [
         * ['/' => function return,],
@@ -29,10 +29,12 @@ class Router {
      */
     protected array $routes = [];
     public Request $request;
+    public Response $response;
 
-    public function __construct($request)
+    public function __construct($request, $response)
     {
         $this->request = $request;
+        $this->response = $response;
     }
 
     /**
@@ -52,6 +54,7 @@ class Router {
     public function resolve() {
         $path = $this->request->getPath();
         $method = $this->request->getMethod();
+        
 
         // print "<pre>";
         // var_dump($this->routes);
@@ -64,12 +67,63 @@ class Router {
         $callback = $this->routes[$method][$path] ?? false;
         // if there is no such route added, we say it doesn't exist
         if ($callback === false) : 
+            // 404
+            $this->response->setResponseCode(404); 
             print "Page doesn't exist";
             die();
         endif;
 
-        // page does exist, we call user function
-        print call_user_func($callback);
+        // if our callback value is string
+        // $app->router->get('/about', 'about');
+        if(is_string($callback)) :
+            return $this->renderView($callback);
+        endif;
 
+        // page does exist, we call user function
+        return call_user_func($callback);
+
+    }
+
+    /**
+     * Renders the page and applies the layout
+     *
+     * @param string $view
+     * @return string / string []
+     */
+    public function renderView(string $view) {
+        $layout = $this->layoutContent();
+        $page = $this->pageContent($view);
+
+        // take layout and replace the content with the $page content
+        return str_replace('{{content}}', $page, $layout);
+
+        // 
+    }
+
+    /**
+     * Returns the layout HTML content
+     *
+     * @return false / string
+     */
+    protected function layoutContent () {
+        // start buffering
+        ob_start();
+        include_once Application::$ROOT_DIR."/view/layout/main.php";
+        // stop and return buffering
+        return ob_get_clean();
+    }
+
+    /**
+     * Returns only the given page HTML content
+     *
+     * @param [type] $view
+     * @return void
+     */
+    protected function pageContent($view) {
+        // start buffering
+        ob_start();
+        include_once Application::$ROOT_DIR."/view/$view.php";
+        // stop and return buffering
+        return ob_get_clean();
     }
 }
