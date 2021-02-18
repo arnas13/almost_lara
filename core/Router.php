@@ -29,10 +29,12 @@ class Router {
      */
     protected array $routes = [];
     public Request $request;
+    public Response $response;
 
-    public function __construct($request)
+    public function __construct($request, $response)
     {
         $this->request = $request;
+        $this->response = $response;
     }
 
     /**
@@ -66,7 +68,7 @@ class Router {
         // if there is no such route added, we say it doesn't exist
         if ($callback === false) : 
             // 404
-            Application::$app->response->setResponseCode(404); 
+            $this->response->setResponseCode(404); 
             print "Page doesn't exist";
             die();
         endif;
