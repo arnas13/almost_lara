@@ -100,9 +100,9 @@ class Router {
      * @param string $view
      * @return string / string []
      */
-    public function renderView(string $view) {
+    public function renderView(string $view, array $params = []) {
         $layout = $this->layoutContent();
-        $page = $this->pageContent($view);
+        $page = $this->pageContent($view, $params);
 
         // take layout and replace the content with the $page content
         return str_replace('{{content}}', $page, $layout);
@@ -129,7 +129,20 @@ class Router {
      * @param [type] $view
      * @return void
      */
-    protected function pageContent($view) {
+    protected function pageContent($view, $params) {
+        // a smart way of creating variables dinamically        
+        // $name = $params['name'];
+
+        foreach($params as $key => $value) :
+            $$key = $value;
+        endforeach;
+
+
+        // print "<pre>";
+        // print_r($params);        
+        // print "</pre>";
+        // exit();
+
         // start buffering
         ob_start();
         include_once Application::$ROOT_DIR."/view/$view.php";
