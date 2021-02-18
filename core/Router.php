@@ -20,7 +20,7 @@ class Router {
      * ],  
      * ['post' => [
         * ['/' => function return,],
-        * ['/about' => function return,],
+        * ['/contact' => function return,],
      * ],
      * 
      * ];
@@ -45,6 +45,17 @@ class Router {
      */
     public function get($path, $callback) {
         $this->routes['get'][$path] =  $callback;
+    }
+
+    /**
+     * This creates post path and handling in route array.
+     *
+     * @param [type] $path
+     * @param [type] $callback
+     * @return void
+     */
+    public function post($path, $callback) {
+        $this->routes['post'][$path] =  $callback;
     }
 
     /**
@@ -126,4 +137,5 @@ class Router {
         // stop and return buffering
         return ob_get_clean();
     }
+
 }
