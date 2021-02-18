@@ -80,6 +80,12 @@ class Router {
 
     }
 
+    /**
+     * Renders the page and applies the layout
+     *
+     * @param string $view
+     * @return string / string []
+     */
     public function renderView(string $view) {
         $layout = $this->layoutContent();
         $page = $this->pageContent($view);
@@ -90,6 +96,11 @@ class Router {
         // 
     }
 
+    /**
+     * Returns the layout HTML content
+     *
+     * @return false / string
+     */
     protected function layoutContent () {
         // start buffering
         ob_start();
@@ -98,6 +109,12 @@ class Router {
         return ob_get_clean();
     }
 
+    /**
+     * Returns only the given page HTML content
+     *
+     * @param [type] $view
+     * @return void
+     */
     protected function pageContent($view) {
         // start buffering
         ob_start();
