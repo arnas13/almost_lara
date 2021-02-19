@@ -67,13 +67,6 @@ class Router {
         $method = $this->request->getMethod();
         
 
-        // print "<pre>";
-        // var_dump($this->routes);
-        // var_dump($path);
-        // var_dump($method);
-        // print "</pre>";
-        // exit();
-
         // trying to run a route from routes array 
         $callback = $this->routes[$method][$path] ?? false;
         // if there is no such route added, we say it doesn't exist
@@ -88,6 +81,19 @@ class Router {
         if(is_string($callback)) :
             return $this->renderView($callback);
         endif;
+
+        // if our callback is array we handle it with class instance
+        if (is_array($callback)) :
+            $instance = new $callback[0];
+            $callback[0] = $instance;
+        endif;
+
+        // print "<pre>";
+        // var_dump($callback);
+        // var_dump($path);
+        // var_dump($method);
+        // print "</pre>";
+        // exit();
 
         // page does exist, we call user function
         return call_user_func($callback);
