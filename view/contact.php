@@ -3,11 +3,11 @@
 <form action="" method="post">
   <div class="form-group">
     <label for="email">Email address</label>
-    <input type="email" class="form-control" id="email">
+    <input name="text" type="text" class="form-control" id="email">
   </div>
   <div class="form-group">
-    <label for="exampleInputPassword1">Password</label>
-    <input type="password" class="form-control" id="exampleInputPassword1">
+    <label for="exampleInputPassword1">Your text</label>
+    <textarea name="userText" id="userText" class="form-control" cols="30" rows="10"></textarea>
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
