@@ -10,6 +10,13 @@ namespace app\core;
  * @package app\core
  */
 class Controller {
+
+    public string $layout = 'main';
+
+    public function setLayout(string $layout) {
+        $this->layout = $layout;
+    }
+
     /**
      * We render the base view with params
      *
