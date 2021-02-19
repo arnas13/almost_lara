@@ -19,6 +19,19 @@ class SiteController {
         return Application::$app->router->renderView('home', $params);
     }
     /**
+     * This serves the about form view
+     *
+     * @return string
+     */
+    public static function about() {
+        $params = [
+            'version' => '1.0.0'
+        ];
+        // lets render view
+        return Application::$app->router->renderView('about', $params);
+    }
+
+    /**
      * This serves the contact form view
      *
      * @return string
