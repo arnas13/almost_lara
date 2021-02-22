@@ -10,10 +10,23 @@ use app\controller\SiteController;
 use app\core\Application;
 use app\core\AuthController;
 
-// print "<pre>";
-// var_dump(dirname(__DIR__));
-// print "</pre>";
-// exit();
+
+
+$dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
+$dotenv->load();
+
+$config = [
+    'db' => [
+        'dsn' => $_ENV['DB_DSN'],
+        'user' => $_ENV['DB_USER'],
+        'password' => $_ENV['DB_PASSWORD']
+    ]
+];
+
+print "<pre>";
+var_dump($config);
+print "</pre>";
+exit();
 
 $app = new Application(dirname(__DIR__));
 
