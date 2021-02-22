@@ -23,12 +23,12 @@ $config = [
     ]
 ];
 
-print "<pre>";
-var_dump($config);
-print "</pre>";
-exit();
+// print "<pre>";
+// var_dump($config);
+// print "</pre>";
+// exit();
 
-$app = new Application(dirname(__DIR__));
+$app = new Application(dirname(__DIR__), $config);
 
 
 $app->router->get('/', [SiteController::class, 'home']);
