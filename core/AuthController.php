@@ -67,12 +67,13 @@ class AuthController extends Controller{
                 if($this->userModel->register($data)) {
                     // success user added
                     // set flash msg
-                    flash('register_success', "You have registered");
-                    // header("Loacation: " . URLROOT )
-                    redirect('/users/login');
+                    flash('register_success', "You have registered successfully");
+                    // header("Loacation: " . URLROOT . "/users/login");
+                    redirect('/login');
                 } else {
-                    die('something went wrong in adding user ')
+                    die('something went wrong in adding user ');
                 }
+            endif;
 
             // echo "<pre>";
             // var_dump($data);
