@@ -1,14 +1,19 @@
-<?php 
+<?php
+
 
 namespace app\model;
 
 
-class UserModel {
-    private $db;
+use app\core\Application;
+use app\core\Database;
+
+class UserModel
+{
+    private Database $db;
 
     public function __construct()
     {
-        $this->db = new Database;
+        $this->db = Application::$app->db;
     }
 
     // finds user by given email
@@ -32,8 +37,8 @@ class UserModel {
             return false;
         }
     }
-    // Register user with given sanitized data 
-    // @return Boolean 
+    // Register user with given sanitized data
+    // @return Boolean
     public function register($data)
     {
         // prepare statment
@@ -45,7 +50,7 @@ class UserModel {
         // hasshed
         $this->db->bind(':password', $data['password']);
 
-        // make query 
+        // make query
         if ($this->db->execute()) {
             return true;
         } else {
@@ -55,10 +60,10 @@ class UserModel {
 
     // Checks in the database for the email and password
     // tries to verify password
-    // return row or false 
+    // return row or false
     public function login($email, $notHashedPass)
     {
-        // get the row whith given email 
+        // get the row whith given email
         $this->db->query("SELECT * FROM users WHERE `email` = :email");
 
         $this->db->bind(':email', $email);
