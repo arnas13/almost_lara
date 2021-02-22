@@ -55,7 +55,7 @@ class Request {
      * @return boolean
      */
     public function isPost() : bool {
-        return $this->method() == 'post';        
+        return $this->method() === 'post';        
     }
 
     /**
@@ -68,7 +68,7 @@ class Request {
         $body = [];
 
         // what type of request
-        if($this->isPost() === 'post') :
+        if($this->isPost()) :
             foreach ($_POST as $key => $value) :
                 $body[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
             endforeach;
@@ -79,6 +79,11 @@ class Request {
                 $body[$key] = filter_input(INPUT_GET, $key, FILTER_SANITIZE_SPECIAL_CHARS);
             endforeach;
         endif;
+
+        echo "<pre>";
+        var_dump($body);
+        echo "</pre>";
+        exit;
 
         return $body;
     }

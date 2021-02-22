@@ -17,7 +17,7 @@ class AuthController extends Controller{
 
     public function register(Request $request) {
         if($request->isGet()) :
-            $this->setLayout('auth');
+            //$this->setLayout('auth');
 
         // create data
         $data = [
@@ -40,13 +40,14 @@ class AuthController extends Controller{
 
             // request is post and we need to pull user data
             $data = $request->getBody();
-            echo "<pre>";
-            var_dump($data);
-            echo "</pre>";
-            exit;
-
             
-            return "Validating form";
+            // echo "<pre>";
+            // var_dump($data);
+            // echo "</pre>";
+            // exit;
+
+
+            return $this->render('register', $data);
         endif;
     }
 }
