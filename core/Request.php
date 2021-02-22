@@ -16,10 +16,16 @@ class Request {
 
     public function getPath() : string {
         $path = $_SERVER['REQUEST_URI'] ?? '/';
+
         $questionPosition = strpos($path, '?');
 
         if($questionPosition !== false) : 
             $path = substr($path, 0, $questionPosition);
+        endif;
+
+        // if usered entered address with slash on the right remove it
+        if(strlen($path) > 1) : 
+            $path = rtrim($path, '/');
         endif;
 
         return $path;
@@ -49,7 +55,7 @@ class Request {
      * @return boolean
      */
     public function isPost() : bool {
-        return $this->method() == 'post';        
+        return $this->method() === 'post';        
     }
 
     /**
@@ -62,7 +68,7 @@ class Request {
         $body = [];
 
         // what type of request
-        if($this->isPost() === 'post') :
+        if($this->isPost()) :
             foreach ($_POST as $key => $value) :
                 $body[$key] = filter_input(INPUT_POST, $key, FILTER_SANITIZE_SPECIAL_CHARS);
             endforeach;
@@ -73,6 +79,11 @@ class Request {
                 $body[$key] = filter_input(INPUT_GET, $key, FILTER_SANITIZE_SPECIAL_CHARS);
             endforeach;
         endif;
+
+        // echo "<pre>";
+        // var_dump($body);
+        // echo "</pre>";
+        // exit;
 
         return $body;
     }
