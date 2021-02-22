@@ -18,10 +18,34 @@ class AuthController extends Controller{
     public function register(Request $request) {
         if($request->isGet()) :
             $this->setLayout('auth');
-            return $this->render('register');
+
+        // create data
+        $data = [
+            'name' => '',            
+            'email' => '',            
+            'password' => '',            
+            'confirmPassword' => '',            
+            'errors' => [            
+                'nameErr' => '',            
+                'emailErr' => '',            
+                'passwordErr' => '',            
+                'confirmPasswordErr' => '',            
+                ],            
+            'currentPage' => 'register',            
+            ];
+            return $this->render('register', $data);
         endif;
         
         if($request->isPost()) :
+
+            // request is post and we need to pull user data
+            $data = $request->getBody();
+            echo "<pre>";
+            var_dump($data);
+            echo "</pre>";
+            exit;
+
+            
             return "Validating form";
         endif;
     }
