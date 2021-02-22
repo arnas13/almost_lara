@@ -80,10 +80,10 @@ class Request {
             endforeach;
         endif;
 
-        echo "<pre>";
-        var_dump($body);
-        echo "</pre>";
-        exit;
+        // echo "<pre>";
+        // var_dump($body);
+        // echo "</pre>";
+        // exit;
 
         return $body;
     }
