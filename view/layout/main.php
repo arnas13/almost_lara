@@ -37,7 +37,7 @@
     <!-- when logged in -->
     <div class="navbar-nav ml-auto">
       <a class="nav-link disabled" href="#"><?php print $_SESSION['user_email'] ?></a>
-      <a class="nav-link" href="/login">Logout</a>
+      <a class="nav-link" href="/logout">Logout</a>
     </div>
 
     <?php endif; ?>

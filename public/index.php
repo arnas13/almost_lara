@@ -42,7 +42,7 @@ $app->router->post('/login', [AuthController::class, 'login']);
 $app->router->get('/register', [AuthController::class, 'register']);
 $app->router->post('/register', [AuthController::class, 'register']);
 
-$app->router->post('/logout', [AuthController::class, 'logout']);
+$app->router->get('/logout', [AuthController::class, 'logout']);
 
 $app->router->get('/posts', [PostsController::class, 'index']);
 
