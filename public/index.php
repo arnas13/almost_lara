@@ -1,27 +1,37 @@
-<?php 
-
-//phpinfo();exit;
-// require_once 'core/Application.php';
-// require_once 'core/Router.php';
-
+<?php
 require_once '../vendor/autoload.php';
 
+use app\controller\PostsController;
 use app\controller\SiteController;
 use app\core\Application;
 use app\core\AuthController;
 
-// print "<pre>";
-// var_dump(dirname(__DIR__));
-// print "</pre>";
-// exit();
+$dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__));
+$dotenv->load();
 
-$app = new Application(dirname(__DIR__));
+$config =[
+    'db' => [
+        'dsn' => $_ENV['DB_DSN'],
+        'user' => $_ENV['DB_USER'],
+        'password' => $_ENV['DB_PASSWORD']
+    ]
+];
 
+//echo "<pre>";
+//var_dump($config);
+//echo "</pre>";
+//exit;
+
+
+$app = new Application(dirname(__DIR__), $config);
 
 $app->router->get('/', [SiteController::class, 'home']);
 $app->router->get('/about', [SiteController::class, 'about']);
 //$app->router->get('/about', 'about');
 $app->router->get('/contact', [SiteController::class, 'contact']);
+$app->router->get('/fn', function () {
+    return 56 + 76;
+});
 // we create post path
 $app->router->post('/contact', [SiteController::class, 'handleContact']);
 
@@ -32,16 +42,12 @@ $app->router->post('/login', [AuthController::class, 'login']);
 $app->router->get('/register', [AuthController::class, 'register']);
 $app->router->post('/register', [AuthController::class, 'register']);
 
+$app->router->get('/posts', [PostsController::class, 'index']);
+
+$app->router->get('/post/{id}', [PostsController::class, 'post']);
+
+
 $app->run();
-
-
-// $router->get('/about', function() {
-//     return "this is about page";
-// });
-
-//$app->run();
-
-
 
 
 
