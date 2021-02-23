@@ -23,17 +23,17 @@ class AuthController extends Controller
     }
 
     public function login(Request $request)
-    {   
+    {
         // have ability to change laout
-        $this->setLayout('auth');        
+//        $this->setLayout('auth');
 
         if ($request->isGet()) :
             $data = [
-                'email'     => '',
-                'password'  => '',
+                'email' => '',
+                'password' => '',
                 'errors' => [
-                    'emailErr'     => '',
-                    'passwordErr'  => '',
+                    'emailErr' => '',
+                    'passwordErr' => '',
                 ]
             ];
             return $this->render('login', $data);
@@ -50,15 +50,13 @@ class AuthController extends Controller
 
             // if there are no errors
             if ($this->vld->ifEmptyArr($data['errors'])) {
-                // no errors 
+                // no errors
                 // email was found and password was entered
                 $loggedInUser = $this->userModel->login($data['email'], $data['password']);
 
-                // var_dump($loggedInUser);
-                // exit;
 
                 if ($loggedInUser) {
-                    // create session 
+                    // create session
                     // password match
                     // die('email and passs match start session immediately');
                     $this->createUserSession($loggedInUser);
@@ -70,30 +68,31 @@ class AuthController extends Controller
                 }
             }
 
+
             return $this->render('login', $data);
         endif;
+
     }
 
     public function register(Request $request)
     {
         if ($request->isGet()) :
-           //$this->setLayout('auth');
+//            $this->setLayout('auth');
 
             // create data
             $data = [
-                'name'      => '',
-                'email'     => '',
-                'password'  => '',
+                'name' => '',
+                'email' => '',
+                'password' => '',
                 'confirmPassword' => '',
                 'errors' => [
-                    'nameErr'      => '',
-                    'emailErr'     => '',
-                    'passwordErr'  => '',
+                    'nameErr' => '',
+                    'emailErr' => '',
+                    'passwordErr' => '',
                     'confirmPasswordErr' => '',
                 ],
                 'currentPage' => 'register',
             ];
-
 
 
             return $this->render('register', $data);
@@ -123,7 +122,7 @@ class AuthController extends Controller
                 if ($this->userModel->register($data)) {
                     // success user added
                     // set flash msg
-                    //flash('register_success', 'You have registered successfully');
+//                    flash('register_success', 'You have registered successfully');
                     // header("Location: " . URLROOT . "/users/login");
                     $request->redirect('/login');
                 } else {
@@ -133,23 +132,21 @@ class AuthController extends Controller
             endif;
 
 
-
-
             return $this->render('register', $data);
         endif;
     }
 
+
     /**
-     * if we have user we save its data in session
-     *
-     * @param  $userRow
-     * @return void
+     *  if we have user we save its data in session
+     * @param $userRow
      */
     public function createUserSession($userRow)
     {
         $_SESSION['user_id'] = $userRow->id;
         $_SESSION['user_email'] = $userRow->email;
         $_SESSION['user_name'] = $userRow->name;
+
     }
 
     public function logout(Request $request)
@@ -160,6 +157,7 @@ class AuthController extends Controller
 
         session_destroy();
 
-        $request->redirect('/register');
+        $request->redirect('/');
+
     }
 }
