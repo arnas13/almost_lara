@@ -23,10 +23,24 @@
       <a class="nav-link" href="/about">About</a>
       <a class="nav-link" href="/contact" >Contact</a>
     </div>
+    <!-- when not logged in  -->
+    <?php
+
+    use app\core\Session;
+
+    if(!Session::isUserLoggedIn()) : ?>
     <div class="navbar-nav ml-auto">
       <a class="nav-link" href="/login">Login</a>
       <a class="nav-link" href="/register">Register</a>
     </div>
+    <?php else : ?>
+    <!-- when logged in -->
+    <div class="navbar-nav ml-auto">
+      <a class="nav-link disabled" href="#"><?php print $_SESSION['user_email'] ?></a>
+      <a class="nav-link" href="/login">Logout</a>
+    </div>
+
+    <?php endif; ?>
   </div>
 </nav>
 
