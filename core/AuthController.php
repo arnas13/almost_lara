@@ -77,7 +77,7 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         if ($request->isGet()) :
-//            $this->setLayout('auth');
+           //$this->setLayout('auth');
 
             // create data
             $data = [
@@ -123,7 +123,7 @@ class AuthController extends Controller
                 if ($this->userModel->register($data)) {
                     // success user added
                     // set flash msg
-//                    flash('register_success', 'You have registered successfully');
+                    //flash('register_success', 'You have registered successfully');
                     // header("Location: " . URLROOT . "/users/login");
                     $request->redirect('/login');
                 } else {
@@ -150,9 +150,9 @@ class AuthController extends Controller
         $_SESSION['user_id'] = $userRow->id;
         $_SESSION['user_email'] = $userRow->email;
         $_SESSION['user_name'] = $userRow->name;
-       
+    }
 
-    public function logout()
+    public function logout(Request $request)
     {
         unset($_SESSION['user_id']);
         unset($_SESSION['user_email']);
@@ -160,6 +160,6 @@ class AuthController extends Controller
 
         session_destroy();
 
-        redirect('/users/login');
+        $request->redirect('/register');
     }
 }
