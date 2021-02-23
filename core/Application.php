@@ -25,9 +25,11 @@ class Application {
     public static Application $app;
     public Controller $controller;
     public Database $db;
+    public Session $session;
 
     public function __construct($rootPath, $config)
-    {
+    {   
+        $this->session = new Session(); 
         // static property assignment
         self::$ROOT_DIR = $rootPath;
         self::$app = $this;
@@ -35,7 +37,8 @@ class Application {
         $this->response = new Response();
         $this->request = new Request();
         $this->router = new Router($this->request, $this->response);   
-        $this->db = new Database($config['db']);     
+        $this->db = new Database($config['db']);
+            
         
     }
 

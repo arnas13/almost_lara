@@ -10,6 +10,7 @@ class PostsController extends Controller
 {
     public function index()
     {
+        $params = [];
         return $this->render('posts/posts');
     }
 
