@@ -89,17 +89,6 @@ class Router
         $path = $this->request->getPath();
         $method = $this->request->method();
 
-        // path = "/post/1" take argument value 1
-        // path = "/post" skip path argument take
-        // extract 1
-
-        $pathArr = explode('/', ltrim($path, '/'));
-
-        if (count($pathArr) > 1) :
-            $path = '/' . $pathArr[0];
-            $urlParam['value'] = $pathArr[1];
-        endif;
-
 
 
         // trying to run a route from routes array
@@ -112,9 +101,37 @@ class Router
 
         // if there is no such route added, we say not exist
         if ($callback === false) :
-            // 404
-            $this->response->setResponseCode(404);
-            return $this->renderView('_404');
+
+            // path = "/post/1" take argument value 1
+            // path = "/post" skip path argument take
+            // extract 1
+
+            $pathArr = explode('/', ltrim($path, '/'));
+
+            if (count($pathArr) === 2) :
+                $path = '/' . $pathArr[0];
+                $urlParam['value'] = $pathArr[1];
+            endif;
+
+            // path = "/post/edit/1" take argument value 1
+            if (count($pathArr) === 3) :
+                $path = '/' . $pathArr[0] . "/" . $pathArr[1];
+                $urlParam['value'] = $pathArr[2];
+                
+            endif;
+
+            $callback = $this->routes[$method][$path] ?? null;
+
+            // echo "<pre>";
+            // print_r($path);
+            // echo "</pre>";
+            // exit;
+
+            if(!isset($urlParam['value'])) :
+                // 404
+                $this->response->setResponseCode(404);
+                return $this->renderView('_404');
+            endif;
         endif;
 
         // if our callback value is string
@@ -147,6 +164,7 @@ class Router
 //            'value' => 32,
 //            'name' => 'id'
 //        ];
+
         return call_user_func($callback, $this->request, $urlParam ?? null);
 
     }
