@@ -48,6 +48,10 @@ $app->router->get('/posts', [PostsController::class, 'index']);
 
 $app->router->get('/post/{id}', [PostsController::class, 'post']);
 
+$app->router->get('/post/add', [PostsController::class, 'addPost']);
+
+$app->router->get('/post/edit/{id}', [PostsController::class, 'editPost']);
+
 
 $app->run();
 
