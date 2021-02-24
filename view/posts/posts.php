@@ -4,7 +4,7 @@
         <?php // echo flash('post_message'); ?>
     </div>
     <div class="col">
-        <a href="/posts/add" class="btn btn-primary pull-right mt-2">
+        <a href="/posts/add" class="btn btn-primary float-right mt-2">
             <i class="fa fa-pencil"></i>
             Add post
         </a>

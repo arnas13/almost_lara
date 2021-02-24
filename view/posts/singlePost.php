@@ -13,7 +13,7 @@
     <hr>
     <a href="<?php echo '/posts/edit/' . $post->post_id ?>" class='btn btn-info '> <i class="fa fa-pencil"></i> Edit</a>
 
-    <form action="<?php echo '/posts/delete/' . $post->id ?>" method="post" class='pull-right'>
+    <form action="<?php echo '/posts/delete/' . $post->id ?>" method="post" class='float-right'>
         <button type="submit" class="btn btn-danger"><i class="fa fa-close"></i> Delete</button>
     </form>
 <?php // endif; ?>
