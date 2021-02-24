@@ -49,20 +49,23 @@ class Router
      */
     public function get($path, $callback)
     {
-        if (strpos($path, '{')) :
+        // 12345678910
+        //"/post/{id}"
+        if (strpos($path, '{')):
             $startPos = strpos($path, '{');
             $endPos = strpos($path, '}');
-            $argName = substr($path, $startPos + 1, $endPos - $startPos -1);
+            $argName = substr($path, $startPos + 1, $endPos - $startPos - 1);
             $callback['urlParamName'] = $argName;
-            $path = substr($path, 0, $startPos - 1);
-    
-        // print"<pre>";
-        // var_dump($path);
-        // print_r($this->routes);
-        // print"</pre>";
-        // exit;
+            $path = substr($path, 0, $startPos -1);
+
+//        echo "<pre>";
+//        var_dump($path);
+////        var_dump($this->routes);
+//        echo "</pre>";
+//        exit;
+
         endif;
-        
+
 
         $this->routes['get'][$path] = $callback;
     }
@@ -87,24 +90,25 @@ class Router
         $method = $this->request->method();
 
         // path = "/post/1" take argument value 1
-        // path = "/post" skip path argument take 
-        //  extract 1
+        // path = "/post" skip path argument take
+        // extract 1
 
-        $pathArr = explode('/' , ltrim($path, '/'));
+        $pathArr = explode('/', ltrim($path, '/'));
 
-        if(count($pathArr) > 1) :
+        if (count($pathArr) > 1) :
             $path = '/' . $pathArr[0];
-            $urlParamValue['value'] = $pathArr[1];
+            $urlParam['value'] = $pathArr[1];
         endif;
+
 
 
         // trying to run a route from routes array
         $callback = $this->routes[$method][$path] ?? false;
 
-        // print"<pre>";
-        // print_r($this->routes);
-        // print"</pre>";
-        // exit;
+//        echo "<pre>";
+//        print_r($this->routes);
+//        echo "</pre>";
+//        exit;
 
         // if there is no such route added, we say not exist
         if ($callback === false) :
@@ -127,6 +131,9 @@ class Router
 
             // check if we have url arguments in callback array
             if (isset($callback['urlParamName'])) :
+                //     [0] => app\controller\PostsController
+//                    [1] => post
+//                    [urlParamName] => id
                 $urlParam['name'] = $callback['urlParamName'];
                 // make call back array with 2 members
                 array_splice($callback, 2, 1);
@@ -134,18 +141,13 @@ class Router
 
         endif;
 
-        // print"<pre>";
-        // print_r($callback);
-        // print"</pre>";
-        // exit;
-
 
         // page dose exsist we call user function
-        // $urlParam = [
-        //     'value' => 32,
-        //     'name' =>'id'
-        // ];
-        return call_user_func($callback, $this->request, $urlParamName ?? null);
+//        $urlParam = [
+//            'value' => 32,
+//            'name' => 'id'
+//        ];
+        return call_user_func($callback, $this->request, $urlParam ?? null);
 
     }
 
