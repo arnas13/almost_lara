@@ -53,8 +53,8 @@ class Router
             $startPos = strpos($path, '{');
             $endPos = strpos($path, '}');
             $argName = substr($path, $startPos + 1, $endPos - $startPos -1);
-            $callback[] = $argName;
-            $path = substr($path, $startPos - 1);
+            $callback['urlParamName'] = $argName;
+            $path = substr($path, 0, $startPos - 1);
     
         // print"<pre>";
         // var_dump($path);
@@ -93,7 +93,7 @@ class Router
         $callback = $this->routes[$method][$path] ?? false;
 
         // print"<pre>";
-        // var_dump($this->routes);
+        // print_r($this->routes);
         // print"</pre>";
         // exit;
 
@@ -115,11 +115,24 @@ class Router
             $instance = new $callback[0];
             Application::$app->controller = $instance;
             $callback[0] = Application::$app->controller;
+
+            // check if we have url arguments in callback array
+            if (isset($callback['urlParamName'])) :
+                $urlParamName = $callback['urlParamName'];
+                // make call back array with 2 members
+                array_splice($callback, 2, 1);
+            endif;
+
         endif;
+
+        // print"<pre>";
+        // print_r($callback);
+        // print"</pre>";
+        // exit;
 
 
         // page dose exsist we call user function
-        return call_user_func($callback, $this->request);
+        return call_user_func($callback, $this->request, $urlParamName ?? null);
 
     }
 
