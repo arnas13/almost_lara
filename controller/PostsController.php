@@ -28,8 +28,10 @@ class PostsController extends Controller
         return $this->render('posts/posts', $data);
     }
 
-    public function post(Request $request) {
-        $data =[];
+    public function post(Request $request, $urlParamName = null) {
+        $data = [
+            'urlParamName' => $urlParamName
+        ];
         return $this->render('posts/singlePost', $data);
     }
 
