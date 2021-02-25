@@ -88,9 +88,9 @@ class AuthController extends Controller
      */
     public function register(Request $request)
     {
-        if ($request->isGet()) :
         $this->setLayout('auth');
-
+        if ($request->isGet()) :
+        
             // create data
             $data = [
                 'name' => '',
