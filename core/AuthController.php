@@ -31,7 +31,7 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         // have ability to change laout
-        // $this->setLayout('auth');
+        $this->setLayout('auth');
 
         if ($request->isGet()) :
             $data = [
@@ -89,7 +89,7 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         if ($request->isGet()) :
-        //  $this->setLayout('auth');
+        $this->setLayout('auth');
 
             // create data
             $data = [
