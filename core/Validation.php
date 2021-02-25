@@ -5,10 +5,14 @@ namespace app\core;
 
 Class Validation
 {
-    private $password;
+    private string $password;
   
-    // check if every array value is empty
-    // @return boolean
+    /**
+     * check if every array value is empty
+     *
+     * @param array $arr
+     * @return bool
+     */
     public function ifEmptyArr($arr)
     {
         // check if all values of array is empty
@@ -19,26 +23,10 @@ Class Validation
         }
         return true;
     }
-    /**
-     * validates empty field 1212121
-     *
-     * @param array $data
-     * @param string $field
-     * @param string  $fieldDisplayName
-     * @return void
-     */
-    public function ifEmptyFieldWithReference(&$data, $field, $fieldDisplayName)
-    {
-        $fieldError = $field . 'Err';
-        // Validate Name 
-        if (empty($data[$field])) {
-            // empty field
-            $data['errors'][$fieldError] = "Please enter Your $fieldDisplayName";
-        }
-    }
+   
 
     /**
-     * check if given sting is empty returns message if empty.
+     * check if given string is empty. Returns message if empty.
      *
      * @param string $field
      * @param string $msg
@@ -65,6 +53,13 @@ Class Validation
         return ''; //falsy
     }
 
+    /**
+     * Validate rules and test for Email in registration
+     *
+     * @param string $field
+     * @param UserModel $userModel
+     * @return string
+     */
     public function validateEmail($field, &$userModel = null)
     {
         // validate empty 
@@ -80,6 +75,13 @@ Class Validation
         return '';
     }
 
+    /**
+     * Validate rules and test for Email in login
+     *
+     * @param string $field
+     * @param UserModel $userModel
+     * @return string
+     */
     public function validateLoginEmail($field, &$userModel)
     {
         // validate empty 
@@ -94,6 +96,14 @@ Class Validation
         return '';
     }
 
+    /**
+     * Validate rules and test for Password 
+     *
+     * @param string $passField
+     * @param int $min
+     * @param int $max
+     * @return string
+     */
     public function validatePassword($passField, $min, $max)
     {
         // validate empty 
@@ -120,6 +130,13 @@ Class Validation
         return '';
     }
 
+    /**
+     * Checks if given value is same as previously entered password
+     *  using validatePassword
+     *
+     * @param string $repeatField
+     * @return string
+     */
     public function confirmPassword($repeatField)
     {
         // validate empty 
