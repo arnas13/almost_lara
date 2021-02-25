@@ -7,9 +7,9 @@ class Database {
     // some local properties
     // we store out connecion
     // dbh - database handler
-    private $dbh;
-    private $stmt;
-    private $error;
+    private \PDO $dbh;
+    private \PDOStatement $stmt;
+    private string $error;
 
     public function __construct($config)
     {
@@ -26,27 +26,37 @@ class Database {
 
         // create PDO instance 
         try {
-            // if we have erro here
-            // echo 'tyring in db';
             // connect to db
             $this->dbh = new \PDO($dsn, $user, $password, $options);
         } catch (PDOException $e) {
             // we catch error here
             $this->error = $e->getMessage();
             echo $this->error;
-            // echo 'catching in db';
         }
     }
 
-    // Prepare statments with query
-    // dbh->query('SELECT * FROM posts WHERE email = :email');
-    public function query($sql)
+    /**
+     * Prepare statements for query
+     *
+     * @param string $sql
+     * @return void
+     */
+    public function query(string $sql)
     {
         // prepare sql statment and save it in local private var
         $this->stmt = $this->dbh->prepare($sql);
     }
 
-    // use stm->bind(':email', 'john@jame.com');
+    /**
+     * Check argument type and bind accordingly.
+     * 
+     * use stm->bind(':email', 'john@jame.com');
+     *
+     * @param [type] $param
+     * @param [type] $value
+     * @param [type] $type
+     * @return void
+     */
     public function bind($param, $value, $type = null)
     {
         if (is_null($type)) {
@@ -71,15 +81,21 @@ class Database {
     }
 
 
-    // execute prepared and binded stament 
-    // return result
+   /**
+    * execute the saved statement.
+    *
+    * @return bool
+    */
     public function execute()
     {
         return $this->stmt->execute();
     }
 
-    // Get results as an array 
-    // return db result array
+    /**
+     * Execute stmt. Get results as an array of objects
+     *
+     * @return array
+     */
     public function resultSet()
     {
         $this->execute();
@@ -87,7 +103,11 @@ class Database {
         return $this->stmt->fetchAll(\PDO::FETCH_OBJ);
     }
 
-    // method to return single row of data
+    /**
+     * Execute stmt. Get single result row as object
+     *
+     * @return mixed
+     */
     public function singleRow()
     {
         $this->execute();
@@ -95,7 +115,11 @@ class Database {
         return $this->stmt->fetch(\PDO::FETCH_OBJ);
     }
 
-    // method to get back number of rows
+    /**
+     * Get stmt affected or return row count
+     *
+     * @return int
+     */
     public function rowCount()
     {
         return $this->stmt->rowCount();
