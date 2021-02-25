@@ -22,10 +22,16 @@ class AuthController extends Controller
         $this->userModel = new UserModel();
     }
 
+    /**
+     * This enables user login. Handles get and post 
+     *
+     * @param Request $request
+     * @return void
+     */
     public function login(Request $request)
     {
         // have ability to change laout
-//        $this->setLayout('auth');
+        // $this->setLayout('auth');
 
         if ($request->isGet()) :
             $data = [
@@ -74,10 +80,16 @@ class AuthController extends Controller
 
     }
 
+    /**
+     * This validates and adds user to users table.
+     *
+     * @param Request $request
+     * @return void
+     */
     public function register(Request $request)
     {
         if ($request->isGet()) :
-//            $this->setLayout('auth');
+        //  $this->setLayout('auth');
 
             // create data
             $data = [
@@ -122,7 +134,7 @@ class AuthController extends Controller
                 if ($this->userModel->register($data)) {
                     // success user added
                     // set flash msg
-//                    flash('register_success', 'You have registered successfully');
+                    //  flash('register_success', 'You have registered successfully');
                     // header("Location: " . URLROOT . "/users/login");
                     $request->redirect('/login');
                 } else {
@@ -149,6 +161,12 @@ class AuthController extends Controller
 
     }
 
+    /**
+     * Unset Session values and destroy session + redirect to /
+     *
+     * @param Request $request
+     * @return void
+     */
     public function logout(Request $request)
     {
         unset($_SESSION['user_id']);

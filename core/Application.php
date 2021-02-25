@@ -42,6 +42,11 @@ class Application {
         
     }
 
+    /**
+     * This runs our application
+     *
+     * @return void
+     */
     public function run() {
         print $this->router->resolve();
     }
