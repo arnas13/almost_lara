@@ -10,7 +10,7 @@ This is our mvc framework build from scratch
 ## How to set it up
 
 1. run command `composer install`
-1. create database mysql database
+1. create mysql database
 1. create table users in database
    
 1. copy .env_example to .env
