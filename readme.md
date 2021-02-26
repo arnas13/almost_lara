@@ -12,10 +12,7 @@ This is our mvc framework build from scratch
 1. run command `composer install`
 1. create database mysql database
 1. create table users in database
-    ``
-        CREATE TABLE  `users` ( `id` INT NOT NULL AUTO_INCREMENT , `name` VARCHAR(100) NOT NULL , `email` VARCHAR(150) NOT NULL , `password` VARCHAR(255) NOT NULL , `created_at` TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , PRIMARY KEY (`id`), UNIQUE `EMAIL` (`email`)) ENGINE = InnoDB;
-
-    ``
+   
 1. copy .env_example to .env
     1. change db name 
     1. change db user 
