@@ -33,6 +33,8 @@ class Database {
             $this->error = $e->getMessage();
             echo $this->error;
         }
+        // create Users table if not exists
+        $this->usersTableInit();
     }
 
     /**
@@ -125,21 +127,22 @@ class Database {
         return $this->stmt->rowCount();
     }
 
+    /**
+     * We check if there is no users table we create it 
+     *
+     * @return void
+     */
+    private function usersTableInit() {
+        $sql = "CREATE TABLE IF NOT EXISTS users 
+        ( id INT NOT NULL AUTO_INCREMENT , 
+        name VARCHAR(100) NOT NULL , 
+        email VARCHAR(150) NOT NULL , 
+        password VARCHAR(255) NOT NULL , 
+        created_at TIMESTAMP on update CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP , 
+        PRIMARY KEY (id), UNIQUE EMAIL (email)) ENGINE = InnoDB;";
+        $this->query($sql);
+        $this->execute();
+    }
 
-
-
-
-
-
-
-
-
-
-    // $name = " ';DROB DATABASE; "
-    // // sql injection
-    // // dbh->query('SELECT * FROM posts WHERE email = :email');
-    // $sql = "INSERT INTO MyGuests (firstname, lastname, email) VALUES ($name, 'Doe', 'john@example.com')";
-    // // use exec() because no results are returned
-    // $conn->exec($sql);
 
 }
